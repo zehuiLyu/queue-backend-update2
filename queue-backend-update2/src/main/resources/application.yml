@@ -1,0 +1,59 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: 123456
+    url: jdbc:mysql://127.0.0.1:3306/queue?characterEncoding=utf-8&useSSL=false&&serverTimezone=GMT%2B8
+
+  redis:
+    database: 0
+    host: "192.168.75.128"
+    port: 6379
+    password: "12345"
+  thymeleaf:
+    cache: false
+server:
+  port: 8080
+  servlet:
+    context-path: /queue
+
+# Sa-Token configuration
+sa-token:
+  # Token name (also cookie name)
+  token-name: satoken
+  # Token validity period (unit: s) 30 days by default. -1 indicates that the token will never expire
+  timeout: 2592000
+  # Token validity period (If no operation is performed within the specified period, the token expires.) Unit: second
+  activity-timeout: -1
+  # Whether to allow concurrent logins with the same account (true allows simultaneous logins, false allows new logins to crowd out old logins)
+  is-concurrent: true
+  # Whether to share a token when multiple users log in to the same account (If the value is true, all logins share one token; if the value is false, one token is created for each login)
+  is-share: false
+  # token style
+  token-style: uuid
+  # Whether to output operation logs
+  is-log: false
+# Configuring the Database Log
+logging:
+  level:
+    # Which package log information to print? (DAO)
+    uofg.zehuilyu.queueapi.mapper: debug
+#mybatis plus settings
+mybatis-plus:
+  mapper-locations: classpath*:uofg/zehuilyu/queueapi/**/xml/*Mapper.xml
+  global-config:
+    # close MP3.0's banner
+    banner: false
+    db-config:
+      #Primary key type 0:" database ID increment ",1:" This type is not set primary key type ", 2:" user input ID",3:" globally unique ID (number type unique ID)", 4:" globally unique ID UUID",5:" string globally unique ID (idWorker string representation)";
+      id-type: ASSIGN_ID
+      # The default database table is named with an underscore
+      table-underline: true
+  configuration:
+    # This configuration prints out the EXECUTED SQL for use during development or testing
+    #log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    # The return type is Map, and the field corresponding to NULL is displayed
+    call-setters-on-nulls: true
+
+
+
